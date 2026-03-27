@@ -1,9 +1,10 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import './db/index.js'
-
 dotenv.config();
+
+import "./db/index.js";
+import jobsRoutes from "./routes/jobsRoutes.js";
 
 const app = express();
 const PORT = process.env.PORT || 1223;
@@ -11,6 +12,8 @@ const PORT = process.env.PORT || 1223;
 // Middlewares
 app.use(cors());
 app.use(express.json());
+
+app.use("/api/jobs", jobsRoutes);
 
 app.get("/", (req, res) => {
   res.send("API is running...");
