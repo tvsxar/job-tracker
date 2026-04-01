@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import Logo from "./Logo";
 
 function Navbar() {
@@ -8,10 +9,10 @@ function Navbar() {
     >
       <Logo />
 
-      <button className='text-black font-semibold text-md rounded-md px-3 h-8 
+      <Link to='/jobs/new' className='text-black font-semibold text-md rounded-md px-3 h-8 
         cursor-pointer hover:text-[#EC4899] hover:drop-shadow-[0_0_6px_rgba(236,72,153,0.5)] duration-200'>
             <p>Add job</p>
-        </button>
+        </Link>
     </nav>
   );
 }
