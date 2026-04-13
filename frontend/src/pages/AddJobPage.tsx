@@ -1,7 +1,7 @@
 function AddJobPage() {
   return (
     <div className="flex items-center justify-center min-h-[85vh] px-4 sm:px-12 lg:px-25 bg-gray-50">
-      <div className="border border-gray-100 rounded-lg p-2 max-w-lg bg-white">
+      <div className="border border-gray-200 rounded-lg p-2 max-w-lg bg-white">
         <div className="w-full max-w-md rounded-xl p-3">
           <h1 className="mb-6 font-semibold text-xl">Add Your Job</h1>
           <form className="flex flex-col gap-4">
