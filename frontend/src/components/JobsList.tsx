@@ -3,7 +3,7 @@ import type { Job } from '../types';
 import { useState } from "react";
 
 function JobsList() {
-    const [isOpen, setIsOpen] = useState(false);
+    const [openJobId, setOpenJobId] = useState<number | null>(null);
 
     const jobs: Job[] = [
         {
@@ -43,12 +43,18 @@ function JobsList() {
         },
     ];
 
-    const toggleMenu = () => setIsOpen(prev => !prev);;
-
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {jobs.map(job => (
-                <JobCard key={job.id} job={job} isOpen={isOpen} toggleMenu={toggleMenu} setIsOpen={setIsOpen} />
+                <JobCard
+                    key={job.id}
+                    job={job}
+                    isOpen={openJobId === job.id}
+                    onMenuClick={() =>
+                        setOpenJobId(prev => (prev === job.id ? null : job.id))
+                    }
+                    onCloseMenu={() => setOpenJobId(null)}
+                />
             ))}
         </div>
     )

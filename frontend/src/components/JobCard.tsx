@@ -1,15 +1,29 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { Job, JobStatus } from '../types';
 
 interface JobCardProps {
     job: Job;
-    toggleMenu: () => void;
-    setIsOpen: (arg: boolean) => void;
     isOpen: boolean;
+    onMenuClick: () => void;
+    onCloseMenu: () => void;
 }
 
-function JobCard({ job, toggleMenu, setIsOpen, isOpen }: JobCardProps) {
+function JobCard({ job, isOpen, onMenuClick, onCloseMenu }: JobCardProps) {
     const [status, setStatus] = useState(job.status);
+    const menuRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        if (!isOpen) return;
+
+        const handleClickOutside = (event: MouseEvent) => {
+            if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+                onCloseMenu();
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, [isOpen, onCloseMenu]);
 
     const bgColors = {
         'applied': 'bg-blue-200',
@@ -27,7 +41,7 @@ function JobCard({ job, toggleMenu, setIsOpen, isOpen }: JobCardProps) {
 
     const handleStatusChange = (newStatus: JobStatus) => {
         setStatus(newStatus);
-        setIsOpen(false);
+        onCloseMenu();
     };
 
     const formatStatus = (s: string) =>
@@ -35,11 +49,11 @@ function JobCard({ job, toggleMenu, setIsOpen, isOpen }: JobCardProps) {
 
     return (
         <div className="border rounded-lg p-4 flex flex-col gap-2 border-gray-300 bg-white">
-            <div className="flex items-center justify-between mb-3 relative">
+            <div ref={menuRef} className="flex items-center justify-between mb-3 relative">
                 <h2 className="font-semibold text-lg">{job.title}</h2>
 
                 <div 
-                onClick={toggleMenu}
+                onClick={onMenuClick}
                 className={`${bgColors[status]} ${textColors[status]}  py-0.5 px-1 rounded-lg cursor-pointer hover:scale-102`}>
                     {formatStatus(status)}
                 </div>
