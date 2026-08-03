@@ -3,5 +3,7 @@ export interface Job {
   title: string;
   company: string;
   salary: number;
-  status: "Applied" | "Interview" | "Offer" | "Rejected";
+  status: JobStatus;
 }
+
+export type JobStatus = "applied" | "interview" | "offer" | "rejected";
